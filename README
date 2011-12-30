@@ -1,0 +1,7 @@
+Folders are organized by the IDE or language that they correspond to:
+
+Wing IDE = Python
+SICP = TeX / LaTeX / LyX
+RStudio = R
+
+and the rest of the folders have names representing their language.
