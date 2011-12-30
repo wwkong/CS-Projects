@@ -1,0 +1,3370 @@
+#LyX file created by tex2lyx 2.0.1
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options false
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref 0
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+% Document Type: LaTeX
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+% Master File: ps3rsa.tex
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+preview false
+filename "."
+
+\end_inset
+
+../6001mac
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset FormulaMacro
+\def\fbox #1{%
+  \vtop{\vbox{\hrule%
+     \hbox{\vrule\kern3pt%
+ \vtop{\vbox{\kern3pt#1}\kern3pt}%
+ \kern3pt\vrule}}% 
+ \hrule}}
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+usepackage{../epsfig}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+begin{document}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+psetheader
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+Sample Problem Set
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+RSA Encryption
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+
+\series bold
+Public-Key Encryption and Digital Signatures 
+\family default
+\series default
+\shape default
+ 
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+The ideas of 
+\shape italic
+public-key encryption
+\family default
+\series default
+\shape default
+ and 
+\shape italic
+digital signatures
+\family default
+\series default
+\shape default
+ were discovered only in 1976. But they already play a fundamental role as a way to achieve private communication in a world that relies increasingly upon digital information. Interestingly, the fact that there are fast algorithms for exponentiation and for testing prime numbers (sections 1.2.4--1.2.6 of the text) lies at the root of RSA---the most popular method for implementing public-key encryption. In this problem set you will implement a version of the RSA system. By doing so, you will gain experience with some algorithms that although simple, have immense practical importance.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+
+This problem set was designed in 1987 by Ruth Shyu and Eric Grimson and revised in 1992 by David LaMacchia and Hal Abelson.
+\end_layout
+
+\end_inset
+
+ Section 1 of this handout desccribes how the system works. Section 2 contains exercises that you should be prepared to discuss in tutorial. Section 3 contains background for the lab assigment, and section 4 is the actual lab assignment.
+\end_layout
+
+\begin_layout Section
+
+1. The RSA System
+\end_layout
+
+\begin_layout Standard
+
+People have been using secret codes for thousands of years; for this reason it is surprising that in 1976, Whitfield Diffie and Martin Hellman at Stanford University discovered a major new conceptual approach to encryption and decryption; 
+\shape italic
+public-key cryptography
+\family default
+\series default
+\shape default
+.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+
+W. Diffie and M. Hellman, 
+\begin_inset Quotes eld
+\end_inset
+
+New directions in cryptography,
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\shape italic
+IEEE Transactions on Information Theory
+\family default
+\series default
+\shape default
+, IT-22:6, 1976, pp 644--654.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Cryptography systems are typically based on the notion of using 
+\shape italic
+keys
+\family default
+\series default
+\shape default
+ for encryption and decryption. An 
+\shape italic
+encryption key
+\family default
+\series default
+\shape default
+ specifies the method for converting the original message into an encoded form. A corresponding 
+\shape italic
+decryption key
+\family default
+\series default
+\shape default
+ describes how to undo the encoding. In traditional cryptographic systems, the decryption key is identical to the encryption key, or can be readily derived from it. As a consequence, if you know how to 
+\shape italic
+encrypt
+\family default
+\series default
+\shape default
+ messages with a particular key then you can easily 
+\shape italic
+decrypt
+\family default
+\series default
+\shape default
+ messages that were encrypted with that key.
+\end_layout
+
+\begin_layout Standard
+
+Diffie and Hellman's insight was to realize that there are cryptographic systems for which knowing the encryption key gives no help in decrypting messages; that is, for which there is no practical way to derive the decryption key from the encryption key. This is of immense practical importance. In traditional cryptographic systems, someone can send you coded messages only if the two of you share a secret key. Since anyone who learns that key would be able to decrypt the messages, keys must be carefully guarded and transmitted only under tight security. In Diffie and Hellman's system, you can tell your 
+\shape italic
+encryption
+\family default
+\series default
+\shape default
+ key to anyone who wants to send you messages, and not worry about key security at all. For even if everyone in the world knew your encryption key, no one could decrypt messages sent to you without knowing your 
+\shape italic
+decryption key
+\family default
+\series default
+\shape default
+, which you keep private to yourself. Diffie and Hellman called such a system a 
+\shape italic
+public-key
+\family default
+\series default
+\shape default
+ cryptography system.
+\end_layout
+
+\begin_layout Standard
+
+A few months after Diffie and Hellman announced their idea, Ronald Rivest, Adi Shamir, and Leonard Adelman at MIT discovered a workable method for implementing it. This 
+\shape italic
+RSA cryptography system
+\family default
+\series default
+\shape default
+ has remained the most popular technique for public-key cryptography.
+\end_layout
+
+\begin_layout Subsection
+
+The theory behind RSA
+\end_layout
+
+\begin_layout Standard
+
+RSA uses integers to represent groups of characters
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+
+For example, the ASCII standard representation of a character is a 7-bit integer. In this problem set we will represent a block of four characters as a 28-bit integer (
+\begin_inset Formula $0 \leq s < 2^{28}$
+\end_inset
+
+) by concatenating the ASCII codes of the four characters.
+\end_layout
+
+\end_inset
+
+ and uses special functions that transform integers to integers.
+\end_layout
+
+\begin_layout Standard
+
+In the RSA scheme, you select two large prime numbers, 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+. You then define 
+\begin_inset Formula \begin{eqnarray}
+n&=& pq\\
+m&=&(p - 1)(q - 1).
+\end{eqnarray}
+\end_inset
+
+ You also select a number 
+\begin_inset Formula $e$
+\end_inset
+
+, such that 
+\begin_inset Formula $\gcd(e,m)=1$
+\end_inset
+
+. Your 
+\shape italic
+public key
+\family default
+\series default
+\shape default
+, which you can advertise to the world, is the pair of numbers 
+\begin_inset Formula $n$
+\end_inset
+
+ and 
+\begin_inset Formula $e$
+\end_inset
+
+. Anyone who wants to send you a message 
+\begin_inset Formula $s$
+\end_inset
+
+ (represented by an integer) encrypts it using the following 
+\shape italic
+RSA transformation
+\family default
+\series default
+\shape default
+ defined by 
+\begin_inset Formula $n$
+\end_inset
+
+ and 
+\begin_inset Formula $e$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset VSpace smallskip
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+encrypted message = 
+\begin_inset Formula $s$
+\end_inset
+
+ to the power of 
+\begin_inset Formula $e$
+\end_inset
+
+, modulo 
+\begin_inset Formula $n$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ or 
+\begin_inset Formula \[S = (s^e) \bmod n.\]
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+If you receive an encrypted message 
+\begin_inset Formula $S$
+\end_inset
+
+, you decrypt it by performing another RSA transformation with 
+\begin_inset Formula $n$
+\end_inset
+
+ and a special number 
+\begin_inset Formula $d$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset VSpace smallskip
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $s^\prime$
+\end_inset
+
+ = encrypted message to the power of 
+\begin_inset Formula $d$
+\end_inset
+
+, modulo 
+\begin_inset Formula $n$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ or 
+\begin_inset Formula \[s^\prime = (S^d) \bmod n.\]
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+The number 
+\begin_inset Formula $d$
+\end_inset
+
+ is chosen to have the property that 
+\begin_inset Formula $s = s^\prime$
+\end_inset
+
+ for every message 
+\begin_inset Formula $s$
+\end_inset
+
+,
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+
+Actually, this is true only if 
+\begin_inset Formula $\gcd(s,n)=1$
+\end_inset
+
+. If 
+\begin_inset Formula $n$
+\end_inset
+
+ is the product of two large primes, then almost all messages 
+\begin_inset Formula $s<n$
+\end_inset
+
+ will satisfy this.
+\end_layout
+
+\end_inset
+
+ namely,
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Formula \[s = (s^e)^d \bmod n.\]
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+It can be shown that the number 
+\begin_inset Formula $d$
+\end_inset
+
+ that has this property is the one for which 
+\begin_inset Formula \begin{equation}
+de=1 \bmod m
+\end{equation}
+\end_inset
+
+ that is, for which 
+\begin_inset Formula $d$
+\end_inset
+
+ is the 
+\shape italic
+multiplicative inverse
+\family default
+\series default
+\shape default
+ of 
+\begin_inset Formula $e$
+\end_inset
+
+ modulo 
+\begin_inset Formula $m$
+\end_inset
+
+.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+
+This is a basic result in number theory , we'll just ask you to take it on faith.
+\end_layout
+
+\end_inset
+
+ It turns out that it is easy to compute 
+\begin_inset Formula $d$
+\end_inset
+
+ efficiently if you know 
+\begin_inset Formula $e$
+\end_inset
+
+ and 
+\begin_inset Formula $m=(p-1)(q-1)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+Thus, to generate a pair of RSA keys, you choose prime numbers 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+, compute 
+\begin_inset Formula $n=pq$
+\end_inset
+
+, choose 
+\begin_inset Formula $e$
+\end_inset
+
+, and use this to compute 
+\begin_inset Formula $d$
+\end_inset
+
+. You publish the pair 
+\begin_inset Formula $n$
+\end_inset
+
+ and 
+\begin_inset Formula $e$
+\end_inset
+
+ as your public key, but keep 
+\begin_inset Formula $d$
+\end_inset
+
+ secret to yourself. People send you encrypted messages using the pair 
+\begin_inset Formula $(n,e)$
+\end_inset
+
+. You decrypt these messages using the pair 
+\begin_inset Formula $(n,d)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+The security of the RSA system is based on the fact that even if someone knows 
+\begin_inset Formula $e$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+, the most efficient way known for them to decrypt a message is to factor 
+\begin_inset Formula $n$
+\end_inset
+
+ to find 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+, then use these to compute 
+\begin_inset Formula $m$
+\end_inset
+
+, then use 
+\begin_inset Formula $e$
+\end_inset
+
+ and 
+\begin_inset Formula $m$
+\end_inset
+
+ to compute 
+\begin_inset Formula $d$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+That is to say, cracking an RSA code is, as far as anyone knows, as difficult a computational problem as factoring 
+\begin_inset Formula $n$
+\end_inset
+
+ into its prime factors 
+\begin_inset Formula $p$
+\end_inset
+
+ times 
+\begin_inset Formula $q$
+\end_inset
+
+. And although there has been a tremendous amount of research on factoring, factoring arbitrary large numbers is not a computationally feasible task. For example, factoring 
+\begin_inset Formula $n=pq$
+\end_inset
+
+ where 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+ are each 200-digit primes, even with the today's best factoring algorithms, would require running for more than 100 years on today's fastest supercomputers.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+
+No one has actually proved that cracking an RSA code is as difficult a problem as factoring, but no other method for cracking these codes has been discovered. In addition, some computer scientists believe that it may be possible to prove that there can be no fast (e.g., logarithmic time) algorithms for factoring. Given the popularity of RSA, the discovery of such an algorithm would result in a massive security breakdown for banks, businesses, and other organizations that use RSA.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+Digital signatures; Encrypting and signing
+\end_layout
+
+\begin_layout Standard
+
+In their 1976 paper, Diffie and Hellman suggested applying public-key encryption to solving another important problem of secure communication. The problem is this: suppose you want to send a message by electronic mail. How can people who receive the message be sure that it really comes from you---that it is not a forgery? What is required is some scheme for marking a message in a way that cannot be forged. Such a mark is called a 
+\shape italic
+digital signature
+\family default
+\series default
+\shape default
+.
+\end_layout
+
+\begin_layout Standard
+
+Diffie and Hellman's suggestion was to proceed as follows: take the message and apply a publicly agreed upon 
+\shape italic
+compression function
+\family default
+\series default
+\shape default
+ (also called a 
+\shape italic
+hash function
+\family default
+\series default
+\shape default
+) that transforms the message to a single, relatively small number. In general, there will be many messages that produce the same hash value. Now transform the hash value using your private key. The transformed hash value is your digital signature, which you transmit along with the message. Anyone who receives a message can authenticate the signature by transforming it using your 
+\shape italic
+public key
+\family default
+\series default
+\shape default
+ and checking that this gives the same result as applying the compression function to the message.
+\end_layout
+
+\begin_layout Standard
+
+The reason this scheme works is that anyone who wants to forge a message claiming to be from you must produce a number that, when transformed by your public key, matches the hash value. Anyone can compute the hash value, since the compression function is assumed to be public. But since you are assumed to be the only one who knows your private key, only you can produce the number which is transformed to the hash value by your public key. Trying to forge a digital signature is essentially the same task as trying to crack a public-key encrypted message.
+\end_layout
+
+\begin_layout Standard
+
+An even cuter idea works as follows: Suppose Barbara wants to send George a signed message that only George will be able to read. She encrypts the message using George's public key. Then she signs the encrypted result using her own private key. When George receives a message that is supposed to be from Barbara, he first uses Barbara's public key to authenticate the signature, then decrypts the message using his own private key. Figure
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "digital-signature"
+
+\end_inset
+
+ gives an overview of the method.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+epsfig{file=./figure1.ps}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Caption
+
+
+\begin_layout Standard
+
+Encryption with digital signature.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "digital-signature"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Notice what this accomplishes: George can be sure that only someone with Barbara's private key could have sent the message. Barbara can be sure that only someone with George's private key can read the message. This is accomplished without exchanging any secret information between George and Barbara. It's this capacity for achieving secure communication without having to worry about exchanging secret keys that makes public-key cryptography such an important technique.
+\end_layout
+
+\begin_layout Subsection
+
+Implementing RSA
+\end_layout
+
+\begin_layout Standard
+
+The primary thing we need in order to implement RSA is the fast exponentiation algorithm from section 1.2.6 of the text:
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define (expmod b e m) (cond ((zero? e) 1) ((even? e) (remainder (square (expmod b (/ e 2) m)) m)) (else (remainder (* b (expmod b (- e 1) m)) m)))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+We'll assume that an RSA key is represented as a pair---modulus and exponent:
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define make-key cons) (define key-modulus car) (define key-exponent cdr) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+The basic RSA transformation is then
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define (RSA-transform number key) (expmod number (key-exponent key) (key-modulus key))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+
+Generating prime numbers
+\end_layout
+
+\begin_layout Standard
+
+To generate RSA keys, we first of all need a way to generate primes. The most straightforward way is to pick a random number in some desired range and start testing successive numbers from there until we find a prime. The following procedure starts searching at a randomly chosen integer between 
+\family typewriter
+start
+\family default
+\series default
+\shape default
+ and 
+\begin_inset Formula ${\tt start}+{\tt range}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define (choose-prime smallest range) (let ((start (+ smallest (choose-random range)))) (search-for-prime (if (even? start) (+ start 1) start)))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+null
+\end_layout
+
+\end_inset
+
+ (define (search-for-prime guess) (if (fast-prime? guess 2) guess (search-for-prime (+ guess 2)))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+null
+\end_layout
+
+\end_inset
+
+ (define choose-random ;; restriction of Scheme RANDOM primitive (let ((max-random-number (expt 10 18))) (lambda (n) (random (floor->exact (min n max-random-number)))))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+The test for primality is the Fermat test, described in section 1.2.6:
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define (fermat-test n) (let ((a (choose-random n))) (= (expmod a n n) a))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+null
+\end_layout
+
+\end_inset
+
+ (define (fast-prime? n times) (cond ((zero? times) true) ((fermat-test n) (fast-prime? n (- times 1))) (else false))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+
+Generating RSA key pairs
+\end_layout
+
+\begin_layout Standard
+
+Now we can generate a public RSA key and matching private key. We'll represent these as a pair:
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define make-key-pair cons) (define key-pair-public car) (define key-pair-private cdr) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+The following procedure generates an RSA key pair. It picks primes 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+ that are in the range from 
+\begin_inset Formula $2^{14}$
+\end_inset
+
+ to 
+\begin_inset Formula $2^{15}$
+\end_inset
+
+ so that 
+\begin_inset Formula $n=pq$
+\end_inset
+
+ will be in the range 
+\begin_inset Formula $2^{28}$
+\end_inset
+
+ to 
+\begin_inset Formula $2^{30}$
+\end_inset
+
+, which is large enough to encode four characters per number.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+
+We're using such small values of 
+\begin_inset Formula $n$
+\end_inset
+
+ for this problem set because we want you to play around with cracking an RSA system. By starting with larger random numbers, you can use the same method to produce a system that really is secure.
+\end_layout
+
+\end_inset
+
+ After picking the primes, it computes 
+\begin_inset Formula $n$
+\end_inset
+
+ and 
+\begin_inset Formula $m$
+\end_inset
+
+ according to equations (1) and (2). It then chooses an exponent 
+\begin_inset Formula $e$
+\end_inset
+
+ and finds a number 
+\begin_inset Formula $d$
+\end_inset
+
+ that satisfies equation (3).
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define (generate-RSA-key-pair) (let ((size (expt 2 14))) (let ((p (choose-prime size size)) (q (choose-prime size size))) (if (= p q) ;check that we haven't chosen the same prime twice (generate-RSA-key-pair) ;(VERY unlikely) (let ((n (* p q)) (m (* (- p 1) (- q 1)))) (let ((e (select-exponent m))) (let ((d (invert-modulo e m))) (make-key-pair (make-key n e) (make-key n d))))))))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+The exponent 
+\begin_inset Formula $e$
+\end_inset
+
+ can be any random number 
+\begin_inset Formula $0<e<m$
+\end_inset
+
+ with 
+\begin_inset Formula $\gcd(e,m)=1$
+\end_inset
+
+. The 
+\family typewriter
+gcd
+\family default
+\series default
+\shape default
+ procedure is given in section 1.2.5 of the notes, but is actually a Scheme primitive.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define (select-exponent m) (let ((try (choose-random m))) (if (= (gcd try m) 1) ;if gcd is not 1, then try again try (select-exponent m)))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+
+Computing the multiplicative inverse
+\end_layout
+
+\begin_layout Standard
+
+The number 
+\begin_inset Formula $d$
+\end_inset
+
+ required for the RSA key must satisfy 
+\begin_inset Formula \[de=1 \bmod m\]
+\end_inset
+
+ Using the definition of equality modulo 
+\begin_inset Formula $m$
+\end_inset
+
+, this means that 
+\begin_inset Formula $d$
+\end_inset
+
+ must satisfy 
+\begin_inset Formula \[km + de=1\]
+\end_inset
+
+ where 
+\begin_inset Formula $k$
+\end_inset
+
+ is a (negative) integer. One can show that a solution to this equation exists if and only if 
+\begin_inset Formula $\gcd(e,m)=1$
+\end_inset
+
+. The following procedure generates the required value of 
+\begin_inset Formula $d$
+\end_inset
+
+, assuming that we have another procedure available which, given two integers 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+, returns a pair of integers 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ such that 
+\begin_inset Formula $ax+by=1$
+\end_inset
+
+.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+
+The Scheme primitive 
+\family typewriter
+modulo
+\family default
+\series default
+\shape default
+, which we use to insure a positive result, is the same as 
+\family typewriter
+remainder
+\family default
+\series default
+\shape default
+, except on negative arguments: 
+\family typewriter
+(remainder -12 7)
+\family default
+\series default
+\shape default
+ is 
+\begin_inset Formula $-5$
+\end_inset
+
+, while 
+\family typewriter
+(modulo -12 7)
+\family default
+\series default
+\shape default
+ is 2. In general, 
+\family typewriter
+(modulo a b)
+\family default
+\series default
+\shape default
+ always has the same sign as 
+\family typewriter
+b
+\family default
+\series default
+\shape default
+, while 
+\family typewriter
+(remainder a b)
+\family default
+\series default
+\shape default
+ always has the same sign as 
+\family typewriter
+a
+\family default
+\series default
+\shape default
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define (invert-modulo e m) (if (= (gcd e m) 1) (let ((y (cdr (solve-ax+by=1 m e)))) (modulo y m)) ;take y modulo m, in case y was negative (error "gcd not 1" e m))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Solving 
+\begin_inset Formula $ax+by=1$
+\end_inset
+
+ can be accomplished by a nice recursive trick that is closely related to the recursive GCD algorithm in section 1.2.5 of the text. Let 
+\begin_inset Formula $q$
+\end_inset
+
+ be the quotient of 
+\begin_inset Formula $a$
+\end_inset
+
+ by 
+\begin_inset Formula $b$
+\end_inset
+
+, and let 
+\begin_inset Formula $r$
+\end_inset
+
+ be the remainder of 
+\begin_inset Formula $a$
+\end_inset
+
+ by 
+\begin_inset Formula $b$
+\end_inset
+
+, so that 
+\begin_inset Formula \[a=bq+r\]
+\end_inset
+
+ Now (recursively) solve the equation 
+\begin_inset Formula \[b\bar{x}+r\bar{y}=1\]
+\end_inset
+
+ and use 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\bar{y}$
+\end_inset
+
+ to generate 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+. We'll leave to you the details of how to write the actual procedure. (Ask in recitation.)
+\end_layout
+
+\begin_layout Subsubsection
+
+Encrypting and decrypting messages
+\end_layout
+
+\begin_layout Standard
+
+Finally, to use RSA, we need a way to transform between strings of characters and numbers. The code for this problem set includes procedures 
+\family typewriter
+string->intlist
+\family default
+\series default
+\shape default
+ and 
+\family typewriter
+intlist->string
+\family default
+\series default
+\shape default
+ that convert between character strings and lists of integers. Each integer (between 0 and 
+\begin_inset Formula $2^{28}$
+\end_inset
+
+) encodes 4 successive characters from the message. If the number of characters is not a multiple of 4, the message is padded by appending spaces:
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (string->intlist "This is a string.") ;Value: (242906196 69006496 245157985 217822450 67637294) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+null
+\end_layout
+
+\end_inset
+
+ (intlist->string '(242906196 69006496 245157985 217822450 67637294)) ;Value: "This is a string. " 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+The code for these two procedures is included with the problem set code, but you are not responsible for it. You may want to look at it if you are interested in how character strings can be manipulated in Scheme.
+\end_layout
+
+\begin_layout Standard
+
+To encrypt a message, we transform the message into a list of numbers and convert the list of numbers using the RSA process together with one key in the key pair.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define (RSA-encrypt string key1) (RSA-convert-list (string->intlist string) key1)) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+You might guess that the right way to encode the list of numbers would be to encode each number in the list separately. But this doesn't work well. (See exercise 5 below.) Instead, we encrypt the first number, subrract that from the second number (modulo 
+\begin_inset Formula $n$
+\end_inset
+
+) and encrypt the result, add that to the next number and encrypt the result, and so on, so that each number in the resulting encrypted list will depend upon all the previous numbers:
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define (RSA-convert-list intlist key) (let ((n (key-modulus key))) (define (convert l sum) (if (null? l) '() (let ((x (RSA-transform (modulo (- (car l) sum) n) key))) (cons x (convert (cdr l) x))))) (convert intlist 0))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+We'll leave it to you to implement the analogous 
+\family typewriter
+RSA-unconvert-list
+\family default
+\series default
+\shape default
+ procedure that undoes this transformation using the other key in the key pair. Then we have
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define (RSA-decrypt intlist key2) (intlist->string (RSA-unconvert-list intlist key2))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Finally, to generate digital signatures for encrypted messages, we need a standard compression function. In this problem set, we'll simply add the integers modulo 
+\begin_inset Formula $2^{28}$
+\end_inset
+
+.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+
+In practice, people use more complicated compression schemes than this. You might want to think about why.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define (compress intlist) (define (add-loop l) (if (null? l) 0 (+ (car l) (add-loop (cdr l))))) (modulo (add-loop intlist) (expt 2 28))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%==========================================================================
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+
+2. Exercises
+\end_layout
+
+\begin_layout Paragraph
+
+Exercise 1:
+\end_layout
+
+\begin_layout Standard
+
+What is the difference between the following two ways of defining 
+\family typewriter
+choose-prime
+\family default
+\series default
+\shape default
+?
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define (choose-prime smallest range) (search-for-prime (+ smallest (choose-random range)))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+null
+\end_layout
+
+\end_inset
+
+ (define choose-prime (lambda (smallest range) (search-for-prime (+ smallest (choose-random range))))) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+
+Exercise 2:
+\end_layout
+
+\begin_layout Standard
+
+Using the representation for key pairs described above, draw the box-and-pointer structure for a typical value returned by 
+\family typewriter
+generate-RSA-key-pair
+\family default
+\series default
+\shape default
+.
+\end_layout
+
+\begin_layout Paragraph
+
+Exercise 3:
+\end_layout
+
+\begin_layout Standard
+
+The method of sending secure signed messages outlined above says that the sender should first encrypt the message and then sign the result. Would it be better to first sign and then encrypt?
+\end_layout
+
+\begin_layout Paragraph
+
+Exercise 4:
+\end_layout
+
+\begin_layout Standard
+
+The procedure 
+\family typewriter
+RSA-encrypt
+\family default
+\series default
+\shape default
+ would be much simpler if we were to encrypt each number in the list separately:
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define (RSA-encrypt intlist key1) (map (lambda (int) (RSA-transform int key1)) intlist)) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+What would be the analogous 
+\family typewriter
+RSA-decrypt
+\family default
+\series default
+\shape default
+ procedure? Why is this simple scheme inadequate for secure encryption?
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+
+3. Background for a Programming Assignment
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+rule{6.5 in}{0.5 pt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\family sans
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\size larger
+Ministry of Information
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family sans
+
+\size larger
+
+To: Ross (the Boss) 
+\begin_inset Newline newline
+\end_inset
+
+ From: Rupert
+\end_layout
+
+\begin_layout Standard
+
+\family sans
+
+\size larger
+
+So far we've been pretty successful. I really liked the way you arranged that cattle-futures deal, and the creative accounting by our mole in the Rose Law firm has really done wonders. But I'm getting concerned about the security of our network. My $4M book deal with the Salamander got out before the optimal moment. I hope we haven't been cracked by the entity in Fort Meade. 
+\family default
+\series default
+\shape default
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+rule{6.5 in}{0.5 pt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\family sans
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\size larger
+Central Control
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family sans
+
+\size larger
+
+To: Rupert
+\begin_inset Newline newline
+\end_inset
+
+ From: Ross
+\end_layout
+
+\begin_layout Standard
+
+\family sans
+
+\size larger
+
+You're absolutely right about the need for security. I've gotten in touch with some people I know at Family Values Communications. FVC markets a system that encrypts and authenticates messages using a technique called RSA. The FVC people say they can build an encryption system for the modest fee of $120M. 
+\family default
+\series default
+\shape default
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+rule{6.5 in}{0.5 pt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\family sans
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+
+\size larger
+Ministry of Information
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family sans
+
+\size larger
+
+To: Ross 
+\begin_inset Newline newline
+\end_inset
+
+ From: Rupert
+\end_layout
+
+\begin_layout Standard
+
+\family sans
+
+\size larger
+
+$120 million?!? 
+\family default
+
+\shape italic
+You have to be kidding.
+\family sans
+\series default
+\shape default
+ That's almost as much as it cost us to replace Gorby with Boris. I contacted Chuck (the Vest) at New England Research and Development (His cover is President of MIT.) to ask his advice. As you know, he helped us arrange the White House mail system.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+
+\family sans
+
+\size larger
+
+This is really true. The electronic mail connection to the White House was set up by people at the MIT AI Lab.
+\end_layout
+
+\end_inset
+
+ Chuck says he can do the job for us, for a minor consideration. He needs help getting John (the German) installed in the entity in Virginia. 
+\family default
+\series default
+\shape default
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+rule{6.5 in}{0.5 pt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+MASSACHVSETTS INSTITVTE OF TECHNOLOGY
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+Office of the President
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+Dear Albert and Gerry:
+\end_layout
+
+\begin_layout Standard
+
+I have received a request of the 
+\shape italic
+highest priority
+\family default
+\series default
+\shape default
+ asking that 6.001's next problem set involve RSA cryptography and digital signatures. Sorry for the rush. I've managed to get some of the code from Family Values Communications, so at least the students won't be starting from scratch. Thanks! 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+vskip
+\end_layout
+
+\end_inset
+
+ .2in 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+centerline{
+\end_layout
+
+\end_inset
+
+Chuck Vest
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+rule{6.5 in}{0.5 pt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%==========================================================================
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace vfill
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+
+4. And now, for the programming assignment!
+\end_layout
+
+\begin_layout Standard
+
+Begin by loading the code for the problem set, using the Edwin command 
+\family typewriter
+M-x load-problem-set
+\family default
+\series default
+\shape default
+. This will load in Scheme some code that was provided by 
+\begin_inset Quotes eld
+\end_inset
+
+friends
+\begin_inset Quotes erd
+\end_inset
+
+ at Family Values Communications, and also place this code in an Edwin buffer for you to edit. A listing is attached to this problem set.
+\end_layout
+
+\begin_layout Standard
+
+To test the code, evaluate
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define test-public-key1 (key-pair-public test-key-pair1)) (define result1 (rsa-encrypt "This is a test message." test-public-key1)) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+
+\family typewriter
+Result1
+\family default
+\series default
+\shape default
+ should be the list
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (209185193 793765302 124842465 169313344 117194397 237972864) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+
+\family typewriter
+test-key-pair1
+\family default
+\series default
+\shape default
+ is a sample RSA key pair that we have generated for you to test your code with. Keep in mind that punctuation and upper vs. lower case are significant in the test string.
+\end_layout
+
+\begin_layout Paragraph
+
+Exercise 1:
+\end_layout
+
+\begin_layout Standard
+
+Unfortunately, the code forwarded to us by President Vest is missing one of the procedures---
+\family typewriter
+RSA-unconvert-list
+\family default
+\series default
+\shape default
+---required to decrypt messages. Implement this procedure, which takes as arguments a list of integers to decode and a decoding key, and returns a list of integers, undoing the transformation implemented by 
+\family typewriter
+RSA-convert-list
+\family default
+\series default
+\shape default
+. Hint: This procedure is very similar in form to 
+\family typewriter
+RSA-convert-list
+\family default
+\series default
+\shape default
+. If you find yourself doing something much more complicated, then you are barking up the wrong tree---ask for help if necessary.
+\end_layout
+
+\begin_layout Standard
+
+To test your procedure, try
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define test-private-key1 (key-pair-private test-key-pair1)) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+null
+\end_layout
+
+\end_inset
+
+ (RSA-unconvert-list result1 test-private-key1) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+You should obtain the result
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (242906196 69006496 213717089 229128819 205322725 67875559) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+If that works, then you should be able to evaluate
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (RSA-decrypt result1 test-private-key1) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+to obtain the original test message (except for some trailing spaces). We've also supplied a second key pair for you to work with, which you can obtain by evaluating
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define test-public-key2 (key-pair-public test-key-pair2)) (define test-private-key2 (key-pair-private test-key-pair2)) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+Turn in a listing of your procedure, the sample encryption and decryption of the test message, and a sample encryption and decryption (using 
+\family typewriter
+test-key-pair1
+\family default
+\series default
+\shape default
+ and 
+\family typewriter
+test-key-pair2
+\family default
+\series default
+\shape default
+) of some messages of your choice.
+\end_layout
+
+\begin_layout Paragraph
+
+Exercise 2:
+\end_layout
+
+\begin_layout Standard
+
+Implement the method for encrypting and signing messages described in section 1. Start by specifying a (very) simple data structure called a 
+\family typewriter
+signed-message
+\family default
+\series default
+\shape default
+ that consists of a 
+\family typewriter
+message
+\family default
+\series default
+\shape default
+ part and a 
+\family typewriter
+signature
+\family default
+\series default
+\shape default
+ part. Now define a procedure 
+\family typewriter
+encrypt-and-sign
+\family default
+\series default
+\shape default
+ that takes as arguments a message to be encrypted and signed, the sender's private key, and the recipient's public key. The procedure should encrypt the message, compute a digital signature for it, and combine these to produce a signed message.
+\end_layout
+
+\begin_layout Standard
+
+As a test, try
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define result2 (encrypt-and-sign "Test message from user 1 to user 2" test-private-key1 test-public-key2)) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+You should obtain a signed message whose message part is
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (499609777 242153055 12244841 376031918 242988502 31156692 221535122 463709109 468341391) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+and whose signature part is 15378444.
+\end_layout
+
+\begin_layout Standard
+
+Now implement the inverse transformation 
+\family typewriter
+authenticate-and-decrypt
+\family default
+\series default
+\shape default
+, which takes as arguments the received signed message, the sender's public key, and the recipient's private key. If the signature is authentic the procedure should produce the decrypted message. If the signature is not authentic the procedure should indicate this. Test your procedures by trying
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (authenticate-and-decrypt result2 test-public-key1 test-private-key2) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+to recover the original message. Turn in a listing of your procedures together with a demonstration that they work. (Don't forget to demonstrate that they catch non-authentic signatures.)
+\end_layout
+
+\begin_layout Paragraph
+
+Exercise 3:
+\end_layout
+
+\begin_layout Standard
+
+The public key for sending messages to Bill Clinton is defined in the problem set code:
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define bill-clinton-public-key (make-key 833653283 583595407)) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+The following public keys are also defined:
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define al-gore-public-key (make-key 655587853 463279441)) (define bob-dole-public-key (make-key 507803083 445001911)) (define ross-perot-public-key (make-key 865784123 362279729)) (define hillary-clinton-public-key (make-key 725123713 150990017)) (define tipper-gore-public-key (make-key 376496027 270523157)) (define chuck-vest-public-key (make-key 780450379 512015071)) (define rupert-murdoch-public-key (make-key 412581307 251545759)) (define newt-gingrich-public-key (make-key 718616329 290820109)) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+Yesterday Gingrich received the following message:
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (510560918 588076790 115222453 249656722 408910590 69814552 690687967 281490047 41430131 256420885 184791295 75938032 693840839 663727111 593617709 335351412) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+The signature was 65732336. (These values are defined in the problem set code as 
+\family typewriter
+received\SpecialChar \-
+mystery-message
+\family default
+\series default
+\shape default
+ and 
+\family typewriter
+received-mystery-signature
+\family default
+\series default
+\shape default
+.) Fortunately for us, a friend has managed to obtain Gingrich's private key:
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (define newt-gingrich-private-key (make-key 718616329 129033029)) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+Decrypt the message and identify who sent it.
+\end_layout
+
+\begin_layout Paragraph
+
+Exercise 4:
+\end_layout
+
+\begin_layout Standard
+
+Our friends at FVC also sent us a procedure that generates RSA key pairs: the public key and the associated private key. But they are missing the procedure that solves equations of the form 
+\begin_inset Formula $ax+by=1$
+\end_inset
+
+. Define this procedure, called 
+\family typewriter
+solve-ax+by=1
+\family default
+\series default
+\shape default
+. It takes two integer arguments 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ whose GCD is assumed to be 1. It returns a pair of integers 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+. Demonstrate that your procedure works by finding integers 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ that satisfy the equation: 
+\begin_inset Formula \[ 233987973x + 41111687y = 1\]
+\end_inset
+
+ Don't forget to check your answer!
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+If you have correctly defined this procedure, you should now be able to call the procedure 
+\family typewriter
+generate\SpecialChar \-
+rsa-key-pair
+\family default
+\series default
+\shape default
+ (a procedure of zero arguments) to produce randomly chosen key pairs. Generate a key pair for yourself. Turn in a listing of your 
+\family typewriter
+solve-ax+by=1
+\family default
+\series default
+\shape default
+ procedure together with the values you found for the integers 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+. Also turn in a demonstration that your key pair can be used to encrypt and decrypt messages.
+\end_layout
+
+\begin_layout Paragraph
+
+Exercise 5:
+\end_layout
+
+\begin_layout Standard
+
+You now have a full implementation of an RSA cryptographic system, complete with facilities for encryption, decryption, digital signatures and signature authentication, and generating new keys. Since the implementation uses such small primes, you should also be able to 
+\shape italic
+crack
+\family default
+\series default
+\shape default
+ the system. In order to crack an RSA system, recall, you must factor the modulus 
+\begin_inset Formula $n$
+\end_inset
+
+ into its component prime factors 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+. You can do this using the 
+\family typewriter
+smallest-divisor
+\family default
+\series default
+\shape default
+ procedure that is included in the code.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+
+When you have found one prime divisor 
+\begin_inset Formula $p$
+\end_inset
+
+, the other divisor is 
+\begin_inset Formula $q=n/p$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ Write a procedure 
+\family typewriter
+crack-rsa
+\family default
+\series default
+\shape default
+ that, given a public key, returns the associated private key. Test your procedure using the pairs 
+\family typewriter
+test-key-pair1
+\family default
+\series default
+\shape default
+ and 
+\family typewriter
+test-key-pair2
+\family default
+\series default
+\shape default
+ to show that it generates the correct private keys, given the public keys. Turn in a listing of your procedure, together with demonstrations that it works.
+\end_layout
+
+\begin_layout Paragraph
+
+Exercise 6:
+\end_layout
+
+\begin_layout Standard
+
+Bob Dole would like us to help him trick the Clinton administration into taking unpopular stands. Forge a message from Clinton to Gore, asking Gore to announce that he and Clinton are plannning a major tax increase. Show the resulting message, the encryption, and the signature, and demonstrate that the message will be decrypted by Gore using his private key and Clinton's public key.
+\end_layout
+
+\begin_layout Paragraph
+
+Exercise 7:
+\end_layout
+
+\begin_layout Standard
+
+Please prepare some appropriate forged messages between various people whose public keys are listed above in lab exercise 3. Demonstrate that these messages will decrypt and autheticate correctly. Be sure to say who the message is (purportedly) from, and to whom it should be sent.
+\end_layout
+
+\begin_layout Paragraph
+
+Exercise 8:
+\end_layout
+
+\begin_layout Standard
+
+The RSA system here is easy to crack because the primes are so small: 
+\begin_inset Formula $n=pq$
+\end_inset
+
+ is the product of two primes each about 5 digits long. You can use the supplied procedure 
+\family typewriter
+timed
+\family default
+\series default
+\shape default
+ to see how long it takes 
+\family typewriter
+smallest-divisor
+\family default
+\series default
+\shape default
+ to find factors. Evaluating, for example,
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+beginlisp
+\end_layout
+
+\end_inset
+
+ (timed smallest-divisor 780450379) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+endlisp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+will find the smallest divisor of 780450379 and also print how long the computation took in seconds. Check how long it takes to factor 
+\begin_inset Formula $n$
+\end_inset
+
+ for some of the values produced by 
+\family typewriter
+generate-rsa-key-pair
+\family default
+\series default
+\shape default
+. Based on this data, estimate how long it would take to crack an RSA code if we had used primes that were 50 digits long; 100 digits long. Give your answer in seconds, minutes, days, or years, whichever seems most appropriate.
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+end{document}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
