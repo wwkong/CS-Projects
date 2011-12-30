@@ -1,1 +1,0 @@
-jamp.exe +set fs_game "Stalax" +map sta_tour

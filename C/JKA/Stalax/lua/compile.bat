@@ -1,1 +1,0 @@
-luac.exe -o luaCompiled.lub luaSource.lua
