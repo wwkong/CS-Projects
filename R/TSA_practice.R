@@ -1,0 +1,5 @@
+library(TSA)
+# win.graph(width=4.875, height=2.5, pointsize=8)
+# data(hare); plot(hare,ylab='Abundance',xlab='Year', type='o')
+# data(rwalk); plot(rwalk, ylab='Random Walk', type='o')
+data(tempdub); plot(tempdub,ylab='Temperature', type='o')

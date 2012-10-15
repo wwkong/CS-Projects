@@ -1,0 +1,2 @@
+add1 :: (Integer a) => a -> a
+add1 x = x + 1

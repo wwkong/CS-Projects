@@ -82,6 +82,8 @@ import math, pylab, random
 
 # Here, we define a couple classes:
 
+random.seed("Seed12")
+
 # Below, we have
 # mo = momentum (if true, then stocks that are rising are more likely to stay rising
 #      and vice versa if the price is falling)

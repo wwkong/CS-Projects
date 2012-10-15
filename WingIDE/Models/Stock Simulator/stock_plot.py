@@ -249,16 +249,16 @@ def plotMulti(numStks, S, T, v, M, mo, bf, fig):
 # For the new plots, we initiate a new figure to work with per plot
 
 # Plot the Black-Scholes model for comparing Put/Call Prices to the market price:
-fig1 = pylab.figure()
-plotGreeks(startPrice, strike, maturity, rfrate, volatility, 'Risk-free-rate', fig1)
+#fig1 = pylab.figure()
+#plotGreeks(startPrice, strike, maturity, rfrate, volatility, 'Risk-free-rate', fig1)
 
 # Plot the new Black-Scholes model of a stock simulation:
 #fig2 = pylab.figure()
 #plotStock('ABC', startPrice, numDays, volatility, market, mo, bf, fig2)
 
 # Plot the above except now with options on a twin axis:
-#fig3 = pylab.figure()
-#plotOptions('ABC', startPrice, strike, numDays, volatility, market, mo, bf, fig3)
+fig3 = pylab.figure()
+plotOptions('ABC', startPrice, strike, numDays, volatility, market, mo, bf, fig3)
 
 # Plot a multi-stock simulator:
 #fig4 = pylab.figure()
